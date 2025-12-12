@@ -1,0 +1,7 @@
+Chunking is the process of splitting long documents into passages or segments suitable for embedding and retrieval. Good chunking preserves semantic coherence while keeping token length within embedding model limits (commonly 200–500 tokens). Strategies include fixed-size word-based slicing, sentence-aware chunking that avoids splitting sentences mid-way, and semantic chunking using paragraph boundaries or paragraph-embedding similarity.
+
+Preprocessing steps before chunking: normalize whitespace, remove HTML tags, handle non-UTF characters, and optionally remove boilerplate sections (menus, footers). When ingesting PDF-derived text, pay attention to broken linefeeds and page headers—rejoin lines belonging to the same paragraph.
+
+Metadata is crucial: store source file name, chunk index, and character offsets to enable citation of retrieved passages. Use chunk identifiers when saving to the database so the retriever can return both chunk text and source metadata. For embeddings, convert vectors to float32 and normalize for cosine similarity.
+
+When designing ingestion pipelines, parallelize embedding computation for many chunks, but be mindful of GPU memory and batch sizes. Persist embeddings and chunk metadata in a durable store and write idempotent ingestion logic to avoid duplicate chunks. Finally, monitor retrieval quality with test queries and refine chunk size or embedder model accordingly.

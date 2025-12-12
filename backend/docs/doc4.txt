@@ -1,0 +1,9 @@
+FastAPI is a modern Python web framework focused on high performance, developer ergonomics, and type-safety. Built on Starlette for ASGI and Pydantic for data validation, FastAPI enables rapid API development with automatic OpenAPI documentation and JSON schema generation. Key features include automatic request validation using typed function parameters, dependency injection for reusable components, and async-first design for high concurrency.
+
+A minimal FastAPI app exposes endpoints using decorator-based route functions. Pydantic models define request/response schemas and validate incoming JSON automatically. Dependency injection is used to provide database sessions, authentication, or configuration per request. Middlewares and event hooks (startup, shutdown) allow initialization tasks (database migrations, connection pools) and graceful shutdown behavior.
+
+Performance considerations favor async endpoints when the workload involves I/O-bound tasks such as DB queries, HTTP calls, or file I/O. For CPU-bound heavy tasks (model inference), it is often better to run the inference in a separate worker process or via background tasks to avoid blocking event loop threads; alternatively, use synchronous endpoints and run Uvicorn with multiple worker processes.
+
+Testing FastAPI applications is simple with TestClient (from starlette.testclient) or pytest and fixtures. Automatic docs are available at /docs (Swagger UI) and /redoc (ReDoc). FastAPI integrates well with SQLAlchemy, Alembic for migrations, and common ORMs. Containerization with Docker is straightforward, and deploying behind ASGI servers is the recommended practice.
+
+For a RAG demo, FastAPI provides a quick and observable interface to ingest documents and submit questions. Keep routes small and clearly typed, reuse a single supervisor instance for stateful components (index in memory), and perform heavy preprocessing outside of request handlers.

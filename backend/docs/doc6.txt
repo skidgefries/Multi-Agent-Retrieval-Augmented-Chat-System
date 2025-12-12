@@ -1,0 +1,7 @@
+Question answering (QA) systems come in various forms: extractive QA returns spans from texts, abstractive QA produces free-form answers, and open-domain QA finds answers across large corpora. Transformer models provide strong baselines for both extractive and generative QA. For extractive QA, a BERT-style encoder predicts start and end positions within a passage; for generative QA, encoder-decoder or decoder-only models generate answers conditioned on contexts.
+
+RAG systems combine retrieval with generation to handle open-domain QA: retrieval narrows the textual search space and generation composes an answer based on multiple retrieved passages. Prompt engineering is essential—simple concatenation of passages and the question works for demos, but better prompts include explicit instructions to cite sources, prefer exact matches, or avoid hallucination.
+
+Evaluation metrics vary: SQuAD-style F1 for extractive QA; BLEU/ROUGE for generative QA; human evaluation for fluency and correctness. Error modes include missing relevant passages (retrieval failure), contradictory retrieved context, and generator hallucination. Mitigations include improved chunking, using more robust retrievers, reranking steps, and stronger generators.
+
+Deployment must consider latency, concurrency, and model size. For low-latency QA, use small embedding models and an efficient index; for higher-quality answers, use a larger generator but consider batching and asynchronous processing.
